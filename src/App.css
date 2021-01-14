@@ -18,6 +18,15 @@ p {
 }
 
 .orderData {
-  margin-left: 50px;
+  margin-left: 40px;
+}
+
+.orderData p {
+  border-radius: 2px 2px;
+  padding: 5px;
   display: flex;
+  border: 1px solid #ccc;
+  height: 45px;
+  align-items: center;
+  vertical-align: center;
 }
