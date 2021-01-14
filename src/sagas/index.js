@@ -1,6 +1,6 @@
 
 import { put, call, all, takeEvery } from 'redux-saga/effects'
-import { getAllOrdersSuccess, getAllOrdersError, getOrderByIdSuccess, getOrderByIdError } from '../actions'
+import * as actions from '../actions'
 
 const API_URL = 'http://127.0.0.1:8080'
 
@@ -11,8 +11,14 @@ async function fetchOrdersAsync() {
   return json
 }
 
-async function fetchOrderByIdAsync(orderId) {
+async function fetchOrderByIdAsync (orderId) {
   const response = await fetch(`${API_URL}/api/order/${orderId}`)
+  const json = await response.json()
+  return json
+}
+
+async function fetchFilteredOrdersAsync (ordername) {
+  const response = await fetch(`${API_URL}/api/order?filter=${String(ordername)}`)
   const json = await response.json()
   return json
 }
@@ -20,18 +26,27 @@ async function fetchOrderByIdAsync(orderId) {
 function* fetchOrders() {
   try {
     const orders = yield call(fetchOrdersAsync)
-    yield put(getAllOrdersSuccess(orders))
+    yield put(actions.getAllOrdersSuccess(orders))
   } catch (error) {
-    yield put(getAllOrdersError())
+    yield put(actions.getAllOrdersError())
   }
 }
 
 function* fetchOrderById({ orderId }) {
   try {
     const orderDetails = yield call(fetchOrderByIdAsync, orderId)
-    yield put(getOrderByIdSuccess(orderDetails))
+    yield put(actions.getOrderByIdSuccess(orderDetails))
   } catch (error) {
-    yield put(getOrderByIdError())
+    yield put(actions.getOrderByIdError())
+  }
+}
+
+function* fetchFilteredOrders({ orderName }) {
+  try {
+    const filteredOrders = yield call(fetchFilteredOrdersAsync, orderName)
+    yield put(actions.getFilteredOrdersSuccess(filteredOrders))
+  } catch (error) {
+    yield put(actions.getFilteredOrdersError())
   }
 }
 
@@ -39,5 +54,6 @@ export default function* rootSaga() {
   yield all([
     takeEvery('FETCH_ALL_ORDERS', fetchOrders),
     takeEvery('FETCH_ORDER_BY_ID', fetchOrderById),
+    takeEvery('FETCH_FILTERED_ORDERS', fetchFilteredOrders),
   ])
 }

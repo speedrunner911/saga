@@ -11,7 +11,6 @@ const OrdersList = () => {
   const orderDetails = useSelector((state) => state.orderDetails)
   const orders = useSelector((state) => state.orders)
   
-  
   useEffect(() => {
     dispatch(fetchAllOrders())
   }, [])
@@ -22,7 +21,7 @@ const OrdersList = () => {
   }
 
   return (
-    <Collapse accordion onChange={callback} defaultActiveKey={['1']}>
+    <Collapse accordion onChange={callback}>
       {orders.length > 0 ? (
         orders.map(({id, docDate, docNum}) => (
           <Panel header={`${id}, ${moment(docDate).format('DD:MM:YY')}, ${docNum}`} key={id}>

@@ -7,14 +7,14 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'REQUESTED_ORDERS_SUCCEEDED':
+    case 'GET_ALL_ORDERS_SUCCEEDED':
       return {
         ...state,
         orders: action.data,
         loading: false,
         error: false,
       }
-    case 'REQUESTED_ORDERS_FAILED':
+    case 'GET_ALL_ORDERS_ERROR':
       return {
         loading: false,
         error: true,
@@ -28,6 +28,19 @@ const rootReducer = (state = initialState, action) => {
         error: false,
       }
     case 'GET_ORDER_BY_ID_ERROR': 
+      return {
+        loading: false,
+        error: true,
+      }
+    // get filtered orders
+    case 'GET_FILTERED_ORDERS_SUCCESS': 
+      return {
+        ...state,
+        orders: action.data,
+        loading: false,
+        error: false,
+      }
+    case 'GET_FILTERED_ORDERS_ERROR': 
       return {
         loading: false,
         error: true,
