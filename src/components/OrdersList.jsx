@@ -3,6 +3,7 @@ import moment from 'moment'
 import { Collapse } from 'antd'
 import { useSelector, useDispatch } from "react-redux"
 import { fetchAllOrders, fetchOrderById } from '../actions'
+import SagaLoader from './SagaLoader'
 
 const { Panel } = Collapse
 
@@ -16,7 +17,7 @@ const OrdersList = () => {
   }, [])
   
   const callback = (key) => {
-    if (!key) return // dont need to make call
+    if (!key) return
     dispatch(fetchOrderById(key))
   }
 
@@ -30,11 +31,19 @@ const OrdersList = () => {
                 orderDetails.map(({name, qty, price, sum}) => (
                   <p key={name+sum}>{`${name}, ${qty}, ${price}, ${sum}`}</p>
                 ))
-              ) : <p>No order details</p>}
+              ) : (
+              <SagaLoader 
+                visible={true}
+              />)
+            }
             </div>
           </Panel>
         ))
-      ) : <p>Loading...</p>}
+      ) : (
+        <SagaLoader 
+          visible={true}
+        />
+      )}
     </Collapse>
 
   )
