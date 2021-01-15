@@ -1,6 +1,7 @@
 
 import { put, call, all, takeEvery } from 'redux-saga/effects'
 import * as actions from '../actions'
+import * as actionTypes from '../constants'
 
 const API_URL = 'http://127.0.0.1:8080'
 
@@ -52,8 +53,8 @@ function* fetchFilteredOrders({ orderName }) {
 
 export default function* rootSaga() {
   yield all([
-    takeEvery('FETCH_ALL_ORDERS', fetchOrders),
-    takeEvery('FETCH_ORDER_BY_ID', fetchOrderById),
-    takeEvery('FETCH_FILTERED_ORDERS', fetchFilteredOrders),
+    takeEvery(actionTypes.FETCH_ALL_ORDERS, fetchOrders),
+    takeEvery(actionTypes.FETCH_ORDER_BY_ID, fetchOrderById),
+    takeEvery(actionTypes.FETCH_FILTERED_ORDERS, fetchFilteredOrders),
   ])
 }

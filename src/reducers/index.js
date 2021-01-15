@@ -1,3 +1,5 @@
+import * as actionTypes from '../constants'
+
 const initialState = {
   orders: [],
   orderDetails: {},
@@ -7,40 +9,38 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_ALL_ORDERS_SUCCEEDED':
+    case actionTypes.GET_ALL_ORDERS_SUCCEEDED:
       return {
         ...state,
         orders: action.data,
         loading: false,
         error: false,
       }
-    case 'GET_ALL_ORDERS_ERROR':
+    case actionTypes.GET_ALL_ORDERS_ERROR:
       return {
         loading: false,
         error: true,
       }
-    // get order by id
-    case 'GET_ORDER_BY_ID_SUCCESS': 
+    case actionTypes.GET_ORDER_BY_ID_SUCCESS:
       return {
         ...state,
         orderDetails: action.data,
         loading: false,
         error: false,
       }
-    case 'GET_ORDER_BY_ID_ERROR': 
+    case actionTypes.GET_ORDER_BY_ID_ERROR:
       return {
         loading: false,
         error: true,
       }
-    // get filtered orders
-    case 'GET_FILTERED_ORDERS_SUCCESS': 
+    case actionTypes.GET_FILTERED_ORDERS_SUCCESS:
       return {
         ...state,
         orders: action.data,
         loading: false,
         error: false,
       }
-    case 'GET_FILTERED_ORDERS_ERROR': 
+    case actionTypes.GET_FILTERED_ORDERS_ERROR: 
       return {
         loading: false,
         error: true,
